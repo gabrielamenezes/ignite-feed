@@ -13,7 +13,7 @@ export const Comment = () => {
               <time title='20 de novembro às 9h' dateTime="2024-11-20 09:00:00">Cerca de 2h atrás</time>
             </div>
             <button title='Deletar comentário'>
-              <Trash size={20} />
+              <Trash size={24} />
             </button>
           </header>
 
