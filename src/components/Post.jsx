@@ -30,6 +30,12 @@ export const Post = ({author, publishedAt, content}) => {
   function handleNewCommentChange(e) {
     setNewCommentText(e.target.value)
   }
+  function deleteComment(commentToDelete) {
+    // imutabilidade --> as variáveis não sofrem mutação
+    // nós nunca alteramos um valor de uma variável na memória de uma aplicação, nós criamos um novo valor (um novo espaço na memória)
+    const commentsWithoutDeletedOne = comments.filter(comment => comment !== commentToDelete)
+    setComments(commentsWithoutDeletedOne)
+  }
   return (
     <article className={styles.post}>
         <header>
@@ -65,7 +71,7 @@ export const Post = ({author, publishedAt, content}) => {
 
 
         <div className={styles.commentList}>
-          {comments.map(comment => <Comment key={comment} content={comment} />)}
+          {comments.map(comment => <Comment onDeleteComment={deleteComment} key={comment} content={comment} />)}
         </div>
     </article>
   )
