@@ -28,14 +28,20 @@ export const Post = ({author, publishedAt, content}) => {
   }
 
   function handleNewCommentChange(e) {
+    e.target.setCustomValidity("")
     setNewCommentText(e.target.value)
   }
+  function handleNewCommentInvalid(e) {
+    e.target.setCustomValidity("Esse campo é obrigatório")
+  }
+
   function deleteComment(commentToDelete) {
-    // imutabilidade --> as variáveis não sofrem mutação
-    // nós nunca alteramos um valor de uma variável na memória de uma aplicação, nós criamos um novo valor (um novo espaço na memória)
+   //imutabilidade -> nunca alteramos um valor de uma variável na memória de uma aplicação, nós criamos um novo valor (um novo espaço na memória)
     const commentsWithoutDeletedOne = comments.filter(comment => comment !== commentToDelete)
     setComments(commentsWithoutDeletedOne)
   }
+
+  const isNewCommentInputEmpty = newCommentText.length === 0;
   return (
     <article className={styles.post}>
         <header>
@@ -63,9 +69,17 @@ export const Post = ({author, publishedAt, content}) => {
         <form onSubmit={(e) => handleCreateNewComment(e)} className={styles.commentForm}>
             <strong>Deixe seu feedback</strong>
 
-            <textarea placeholder='Deixe um comentário' name='comment' onChange={(e) => handleNewCommentChange(e)} value={newCommentText}/>
+            <textarea
+              required
+              onInvalid={handleNewCommentInvalid}
+              placeholder='Deixe um comentário'
+              name='comment'
+              onChange={(e) => handleNewCommentChange(e)} 
+              value={newCommentText}
+            />
+
             <footer>
-                <button type='submit'>Publicar</button>
+                <button type='submit' disabled={isNewCommentInputEmpty}>Publicar</button>
             </footer>
         </form>
 
